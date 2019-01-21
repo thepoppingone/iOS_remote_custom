@@ -377,8 +377,10 @@
                         self.device.apps = ret.apps
                         self.device.type = ret.type
                         self.device.version = ret.version
+                        console.log("device info: ", self.device);
                         console.log(udid)
                         var typeString = self.device.type
+                        console.log("device typestring: ", typeString);
                         var realTypeName = iosinfo[typeString]["iPhoneType"]
                         console.log(realTypeName)
                         document.getElementById('deviceTypeName').textContent = realTypeName
@@ -683,19 +685,19 @@
                     beginTime: null,
                 }
                 var _longClickTimeout = 800;
-//                function calculateBounds() {
-//                    var el = element;
-//                    screen.bounds.w = el.offsetWidth
-//                    screen.bounds.h = el.offsetHeight
-//                    screen.bounds.x = 0
-//                    screen.bounds.y = 0
-//
-//                    while (el.offsetParent) {
-//                        screen.bounds.x += el.offsetLeft
-//                        screen.bounds.y += el.offsetTop
-//                        el = el.offsetParent
-//                    }
-//                }
+                function calculateBounds() {
+                    var el = element;
+                    screen.bounds.w = el.offsetWidth
+                    screen.bounds.h = el.offsetHeight
+                    screen.bounds.x = 0
+                    screen.bounds.y = 0
+
+                    while (el.offsetParent) {
+                        screen.bounds.x += el.offsetLeft
+                        screen.bounds.y += el.offsetTop
+                        el = el.offsetParent
+                    }
+                }
                 function deactiveFinger(index) {
                     $(".finger-" + index).removeClass("active").removeClass("longClick")
                 }
@@ -709,7 +711,7 @@
                         return;
                     }
                     e.preventDefault()
-//                    calculateBounds()
+                    calculateBounds()
                     var x = e.offsetX - 30
                     var y = e.offsetY
                     console.log("page x: " + e.offsetX + ", page y: " + e.offsetY)
@@ -743,8 +745,10 @@
                             console.log("LongTap", first);
                             defer = self.tapHold(first.x, first.y, holdTime)
                         } else {
-                            console.log("Tap", first);
-                            defer = self.tap(first.x, first.y)
+                           // console.log("Tap", first);
+                           console.log("Tap2", { x:p.pageX, y:p.pageY} );
+                            //defer = self.tap(first.x, first.y)
+                            defer = self.tap(p.pageX, p.pageY);
                         }
                     }
                     defer.then(function () {
